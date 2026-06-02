@@ -1,0 +1,14 @@
+{
+  "name": "africrop-backend",
+  "version": "1.0.0",
+  "description": "AfriCrop API gateway: weather, market prices, and crop advice.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

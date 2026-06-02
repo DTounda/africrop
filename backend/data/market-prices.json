@@ -1,0 +1,38 @@
+{
+  "_note": "Seed dataset modelled on typical East/Central African wholesale price ranges (USD per kg). It is intentionally structured to mirror a real price-feed response so the /api/market endpoint can later be pointed at a live source (e.g. WFP VAM, FAOSTAT) without changing the frontend. Prices are illustrative, not live quotes.",
+  "currency": "USD",
+  "unit": "kg",
+  "updated": "2026-05-01",
+  "markets": {
+    "maize": [
+      { "market": "Kigali", "country": "Rwanda", "price": 0.42, "trend": "up" },
+      { "market": "Kampala", "country": "Uganda", "price": 0.38, "trend": "stable" },
+      { "market": "Douala", "country": "Cameroon", "price": 0.45, "trend": "down" }
+    ],
+    "cassava": [
+      { "market": "Kigali", "country": "Rwanda", "price": 0.30, "trend": "stable" },
+      { "market": "Kampala", "country": "Uganda", "price": 0.27, "trend": "up" },
+      { "market": "Douala", "country": "Cameroon", "price": 0.33, "trend": "stable" }
+    ],
+    "beans": [
+      { "market": "Kigali", "country": "Rwanda", "price": 0.95, "trend": "up" },
+      { "market": "Kampala", "country": "Uganda", "price": 0.88, "trend": "up" },
+      { "market": "Douala", "country": "Cameroon", "price": 1.02, "trend": "stable" }
+    ],
+    "tomato": [
+      { "market": "Kigali", "country": "Rwanda", "price": 0.70, "trend": "down" },
+      { "market": "Kampala", "country": "Uganda", "price": 0.65, "trend": "stable" },
+      { "market": "Douala", "country": "Cameroon", "price": 0.80, "trend": "up" }
+    ],
+    "rice": [
+      { "market": "Kigali", "country": "Rwanda", "price": 1.10, "trend": "stable" },
+      { "market": "Kampala", "country": "Uganda", "price": 1.05, "trend": "up" },
+      { "market": "Douala", "country": "Cameroon", "price": 1.20, "trend": "stable" }
+    ],
+    "sorghum": [
+      { "market": "Kigali", "country": "Rwanda", "price": 0.50, "trend": "stable" },
+      { "market": "Kampala", "country": "Uganda", "price": 0.46, "trend": "down" },
+      { "market": "Douala", "country": "Cameroon", "price": 0.55, "trend": "stable" }
+    ]
+  }
+}
