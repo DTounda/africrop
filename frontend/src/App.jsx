@@ -30,23 +30,34 @@ export default function App() {
     async function load() {
       setLoading(true);
       setError("");
+      setWeather(null);
+      setAdvice(null);
+      setMarket(null);
+
+      // Market prices don't depend on the weather, so start that request now.
+      const marketReq = getMarket(crop);
+
+      let w = null;
       try {
-        const w = await getWeather(place.lat, place.lon);
+        w = await getWeather(place.lat, place.lon);
         if (cancelled) return;
         setWeather(w);
-
-        const [a, m] = await Promise.all([
-          getAdvice(crop, lang, w.summary),
-          getMarket(crop),
-        ]);
-        if (cancelled) return;
-        setAdvice(a);
-        setMarket(m);
       } catch {
-        if (!cancelled) setError(t.notFound);
-      } finally {
-        if (!cancelled) setLoading(false);
+        // Weather failed: we can still show prices, but not advice.
       }
+
+      // Each card loads on its own, so one failing service doesn't hide the rest.
+      const [a, m] = await Promise.allSettled([
+        w ? getAdvice(crop, lang, w.summary) : Promise.reject(new Error("no weather")),
+        marketReq,
+      ]);
+      if (cancelled) return;
+      if (a.status === "fulfilled") setAdvice(a.value);
+      if (m.status === "fulfilled") setMarket(m.value);
+      if (!w || a.status === "rejected" || m.status === "rejected") {
+        setError(t.loadError);
+      }
+      setLoading(false);
     }
 
     load();

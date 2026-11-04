@@ -10,7 +10,9 @@
 const express = require("express");
 const router = express.Router();
 
-const ADVICE_URL = process.env.ADVICE_SERVICE_URL || "http://localhost:8000";
+// Trailing slashes are stripped so ".../" and "..." both work (".../" would
+// otherwise produce "//advice" and a 404 from the advice service).
+const ADVICE_URL = (process.env.ADVICE_SERVICE_URL || "http://localhost:8000").replace(/\/+$/, "");
 
 router.post("/", async (req, res) => {
   const { crop, lang = "en", weather } = req.body || {};
