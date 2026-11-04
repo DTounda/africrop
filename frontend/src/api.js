@@ -2,7 +2,8 @@
 // All network calls live here. The base URL is read from a Vite env var so the
 // same build works locally and in production (set VITE_API_URL on the host).
 
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:4000";
+// Trailing slashes are stripped so "https://x.com/" and "https://x.com" both work.
+const BASE = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/+$/, "");
 
 // Open-Meteo's geocoding endpoint is free and key-less. We call it directly
 // from the browser because it has no secrets and supports CORS.
