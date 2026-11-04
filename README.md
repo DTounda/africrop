@@ -2,6 +2,24 @@
 
 **Crop advice and market prices for African farmers, in English and French.**
 
+### 🌐 [Try the live app → africrop-sand.vercel.app](https://africrop-sand.vercel.app)
+
+![React](https://img.shields.io/badge/React-Vite-61DAFB?logo=react&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white)
+![Python](https://img.shields.io/badge/Python-FastAPI-009688?logo=fastapi&logoColor=white)
+![Deployed](https://img.shields.io/badge/Deployed-Vercel%20%2B%20Render-000000?logo=vercel&logoColor=white)
+
+<p align="center">
+  <img src="docs/screenshot-home.png" alt="AfriCrop home screen: location search, EN/FR toggle and crop picker" width="49%">
+  <img src="docs/screenshot-results.png" alt="AfriCrop results: planting, water and pest advice plus regional market prices" width="49%">
+</p>
+
+> Search a town (try **Kigali**), pick a crop, and get live weather, planting and
+> irrigation advice, pest alerts and regional market prices.
+>
+> ⏳ The backend runs on free hosting that sleeps when idle, so the very first
+> request can take up to a minute while it wakes up.
+
 AfriCrop is a mobile-first web app that gives smallholder farmers practical,
 location-aware guidance: a live local weather forecast, plain-language advice on
 when to plant and water their crop, pest watch-outs, and current market prices.
@@ -59,6 +77,20 @@ the Open-Meteo API, and a REST design that cleanly separates the three layers.
 
 ---
 
+## 🧠 What I learned
+
+- **Designing a multi-service system:** splitting the app into a React frontend,
+  a Node API gateway and a Python rules engine, and deciding what each layer owns.
+- **Deploying to production:** hosting three services on two platforms (Vercel and
+  Render) and wiring them together with environment variables.
+- **Debugging a live deployment:** tracing a real production bug (a trailing slash
+  in a service URL causing 404s) and making the app resilient to it, so one
+  failing service no longer takes down the whole page.
+- **Building for real users:** bilingual UI, mobile-first layout, and graceful
+  degradation for low-connectivity environments.
+
+---
+
 ## 🚀 Run it locally
 
 You need **Node 18+** and **Python 3.10+**.
@@ -106,6 +138,9 @@ A live link is what turns a repo into a portfolio piece. One simple split:
 3. **Frontend** → deploy `frontend/` on Vercel or Netlify.
    Set env var `VITE_API_URL` to the backend's URL, then build with `npm run build`.
 
+After deploying, open `<backend-url>/api/health/advice` to confirm the gateway can
+reach the advice service. The live version of this project runs exactly this setup.
+
 ---
 
 ## 🔁 Swapping in a live price feed
@@ -137,6 +172,7 @@ Return the same `{ market, country, price, trend }` shape and the UI just works.
 | Method | Endpoint        | Purpose                                   |
 | ------ | --------------- | ----------------------------------------- |
 | GET    | `/api/health`   | Gateway liveness                          |
+| GET    | `/api/health/advice` | Checks the gateway can reach the advice service |
 | GET    | `/api/weather`  | 7-day forecast for `?lat=&lon=`           |
 | GET    | `/api/market`   | Prices for `?crop=`                       |
 | POST   | `/api/advice`   | Crop advice from `{ crop, lang, weather }`|
